@@ -2,26 +2,58 @@ import java.util.Scanner;
 
 public class InventoryControl {
     //Demand Annually
-    double d;
+    double d = 1800;
     //Order Cost
-    double c;
+    double c = 18;
     //Quantity
     double q;
     //Production Rate Annually
     double r;
     //Holding cost per unit annually
-    double h;
+    double h = 2;
     //Percentage of holding cost
-    double hp;
+    double hp = 25;
+    //Discount for discount model;
+    double discount;
+    //h after getting percent
+    double hByHp;
 
     public InventoryControl(){
 
         //Basic Model
-        basicModel();
+       // basicModel();
         //Discount Model
+        discountModel();
         //Gradual Replenishment Model
         //Shortage Model
     }
+
+    private void discountModel() {
+        double totalDiscount;
+        Scanner scan = new Scanner(System.in);
+        //basicModel();
+        System.out.println("Input quantity to get discount (q):");
+        q = scan.nextDouble();
+        scan.nextLine();
+        System.out.println("Input discount in %:");
+        discount = scan.nextDouble();
+        scan.nextLine();
+        System.out.println("h: " + h);
+        System.out.println("Discount: " + (h = (h) * (100-discount)));
+        System.out.println("h: " + h);
+        totalDiscount = d * (h * hp / 100);
+
+
+        System.out.println("h: " + h);
+        double hDiscount = (h = h * hp/100);
+        double minTC = calculateMinTC(h,q,d,c);
+
+        System.out.println("Total Discount: " + totalDiscount);
+        System.out.println("Discounted h: " + hDiscount);
+        System.out.println("MinTC: " + minTC);
+        System.out.println("Total Annual Cost: " + (minTC - hDiscount));
+    }
+
     public void basicModel(){
         inputData();
         q = calculateEOQ(c,d,h);
